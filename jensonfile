@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('git') {
+            steps {
+                git 'https://github.com/gsreddy1870/onlinebookstore.git'
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('quality') {
+            steps {
+                sh 'mvn sonar:sonar \
+  -Dsonar.projectKey=bahubali \
+  -Dsonar.host.url=http://13.60.156.189:9000 \
+  -Dsonar.login=ff2ec1f974fe758085b897c48f149901124187e4'
+            }
+        }
+    }
+}
